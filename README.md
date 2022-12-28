@@ -92,7 +92,7 @@ After that we deploy with [Heroku](https://www.heroku.com/) and we can access th
 
 ![Screenshot](image/vm.png)
 
-Run the command:
+Run the command to create the VM:
 ```
 vagrant up
 ```
@@ -123,13 +123,17 @@ When we test the installation, the connexion at the http://localhost:8080 displa
 
 ![Screenshot](image/localhost8080.png)
 
-To find the password:
+To find the password of the root user you can use the command:
+```
+sudo cat /etc/gitlab/initial_root_password
+```
+
 
 ![Screenshot](image/findpassword.png)
 
 ### **Part 3. Declarative - Configure a health check for GitLab**
 
-The health is OK:
+We check that the health is OK:
 
 ![Screenshot](image/healthcheck.png)
 
@@ -181,7 +185,7 @@ We add readiness check and liveness check:
 
 ```
 
-All is good:
+We check that all is OK:
 
 ![Screenshot](image/checklivandread.png)
 
@@ -213,7 +217,7 @@ After we run
 ```
 docker-compose up
 ```
-We can see http://localhost:3000 
+We can see at http://localhost:3000 that our application is running.
 
 ![Screenshot](image/dockerlocalhost.png)
 
@@ -235,6 +239,17 @@ minikube status
 ```
 ![Screenshot](image/minikubestatus.png)
 
+### **Running the Kubernetes deployments**
+
+- Go to the [/k8s](k8s) directory and run this command for every file:
+```
+kubectl apply -f <file_name.yaml>
+```
+- The deployment.yaml file describes the desired states of the redis and userapi deployments.
+- The service.yaml file exposes the redis and userapi apps as network services and * gives them the right ports.
+- The persistentvolume.yaml file creates a piece of storage in the cluster which has a lifecycle independent of any individual Pod that uses the PersistentVolume.
+- The persistentvolumeclaim.yaml file create a request for storage by a user.
+
 ### **Check that everything is running**
 
 - Check that the deployments are running:
@@ -253,6 +268,10 @@ minikube status
 
 ![Screenshot](image/kubectlpvc.png)
 
+- Check the pods:
+
+![Screenshot](image/kubectlpods.png)
+
 - You can also check this on the minikube dashboard with:
 ```
 minikube dashboard
@@ -263,10 +282,6 @@ minikube dashboard
 ![Screenshot](image/dashboard2.png)
 
 ![Screenshot](image/dashboard3.png)
-
-- Check the pods:
-
-![Screenshot](image/kubectlpods.png)
 
 ## **Author**
 
