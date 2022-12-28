@@ -198,13 +198,18 @@ We create an image of our application:
 
  ## **5. Make container orchestration using Docker Compose**
 
-We create a docker-compose.yaml file that will start our application
+We create a [docker-compose.yaml](docker-compose.yaml) file that will start our application
 
 After we run 
 ```
 docker-compose up
 ```
 We can see http://localhost:3000 
+
+![Screenshot](image/dockerlocalhost.png)
+
+## **6. Make docker orchestration using Kubernetes**
+
 ## **Author**
 
 *Tim Cronier tim.cronier@edu.ece.fr*
