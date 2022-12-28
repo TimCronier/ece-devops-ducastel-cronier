@@ -58,11 +58,17 @@ Another way to test your REST API is to use [Postman](https://www.postman.com/).
 
 ### **Testing**
 
-From the root directory of the project, run:
+From the root directory of the project, you can run some tests with the following command :
 
 ```
 npm test
 ```
+You must run this command in an other terminal before, otherwise the tests won't be valid.
+```
+redis-server
+```
+You obtain the following result :
+
 ![Screenshot](image/test.png)
 
 ## **2. Apply CI/CD pipeline**
