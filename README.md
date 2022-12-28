@@ -75,11 +75,16 @@ We check this with tests :
 
 ![Screenshot](image/workflowtest.png)
 
-After that we deploy with Heroku and we can access the deployment of our project:
+After that we deploy with [Heroku](https://www.heroku.com/) and we can access the deployment of our project:
 
 ![Screenshot](image/herokudeployment.png)
 
 ## **3. Configure and provision a virtual environment and run your application using the IaC approach**
+
+### **Installation**
+
+- Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
+- Install [Vagrant](https://developer.hashicorp.com/vagrant/downloads)
 
 ### **Part 1. Imperative - Using Vagrant with Shell Provisioner**
 
@@ -182,6 +187,10 @@ All is good:
 
 ## **4. Build Docker image of your application**
 
+### **Installation**
+
+Install [Docker Desktop](https://www.docker.com/get-started/)
+
 ### **1. Create a Docker image of your application**
 
 We create an image of our application:
@@ -209,6 +218,55 @@ We can see http://localhost:3000
 ![Screenshot](image/dockerlocalhost.png)
 
 ## **6. Make docker orchestration using Kubernetes**
+
+### **Install Minikube**
+
+Install [Minikube](https://minikube.sigs.k8s.io/docs/start/)
+
+- Start Minikube
+
+```
+minikube start
+```
+- Check that everything is OK
+
+```
+minikube status
+```
+![Screenshot](image/minikubestatus.png)
+
+### **Check that everything is running**
+
+- Check that the deployments are running:
+
+![Screenshot](image/kubectldeployments.png)
+
+- Check that the services are running:
+
+![Screenshot](image/kubectlservices.png)
+
+- Check that the PersistentVolume is running:
+
+![Screenshot](image/kubectlpv.png)
+
+- Check that the PersistentVolumeClaim is running:
+
+![Screenshot](image/kubectlpvc.png)
+
+- You can also check this on the minikube dashboard with:
+```
+minikube dashboard
+```
+
+![Screenshot](image/dashboard1.png)
+
+![Screenshot](image/dashboard2.png)
+
+![Screenshot](image/dashboard3.png)
+
+- Check the pods:
+
+![Screenshot](image/kubectlpods.png)
 
 ## **Author**
 
