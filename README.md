@@ -61,9 +61,9 @@ From the root directory of the project, run:
 ```
 npm test
 ```
-
+![Screenshot](image/test.png)
 ## Author
 
-Sergei Kudinov   
-sergei@adaltas.com
-# ece-devops-ducastel-cronier
+*Tim Cronier tim.cronier@edu.ece.fr*
+*Julien Ducastel julien.ducastel@edu.ece.fr*
+
