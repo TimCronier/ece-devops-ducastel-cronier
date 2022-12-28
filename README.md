@@ -74,23 +74,80 @@ You obtain the following result :
 ## **2. Apply CI/CD pipeline**
 
 We create a CI and CD workflow using this main.yml files : 
+```yaml
+name: Node.js CI
 
-![Screenshot](image/wokflow.png)
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 
-We check this with tests : 
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: userapi
+
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x, 14.x, 15.x]
+        redis-version: [4, 5, 6]
+        
+    steps:
+    - name: Git checkout
+      uses: actions/checkout@v2
+
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Start Redis
+      uses: supercharge/redis-github-action@1.4.0
+      with:
+        redis-version: ${{ matrix.redis-version }}
+
+    - run: npm install
+    - run: npm test
+
+  deploy:
+      
+      needs: build
+      runs-on: ubuntu-latest
+
+      steps:
+        - uses: actions/checkout@v2
+        - uses: akhileshns/heroku-deploy@v3.12.12 # This is the action
+          with:
+            appdir: userapi 
+            heroku_api_key: "9388eb37-448d-4e66-ada3-b5fedb9109a5"
+            heroku_app_name: "devopscronierducastel" #Must be unique in Heroku
+            heroku_email: "timotheecronier@gmail.com"   
+```
+
+We check this with tests via GitHub Actions, on which implemented our continuous integration workflow : 
 
 ![Screenshot](image/workflowtest.png)
 
-After that we deploy with [Heroku](https://www.heroku.com/) and we can access the deployment of our project:
+Finally, we can deploy with [Heroku](https://www.heroku.com/) and we can access the deployment of our project:
 
 ![Screenshot](image/herokudeployment.png)
+ 
+<br><br>
 
 ## **3. Configure and provision a virtual environment and run your application using the IaC approach**
+
+> **_NOTE:_**  Unfortunately, due to an error using that we couldn't manage to fix (the vboxsf type of file cannot be read in our VM), we had to do this part of the project with the lab, not Redis and Userapi.
 
 ### **Installation**
 
 - Install [VirtualBox](https://www.virtualbox.org/wiki/Downloads)
 - Install [Vagrant](https://developer.hashicorp.com/vagrant/downloads)
+
+<br>
 
 ### **Part 1. Imperative - Using Vagrant with Shell Provisioner**
 
@@ -104,9 +161,9 @@ vagrant up
 ```
 ![Screenshot](image/vagrantup.png)
 
-#### *2. Check that everything is ok by connecting to the VM via SSH*
+#### *2. Check that everything is ok by connecting to the VM with SSH*
 
-To enter inside the VM via SSH:
+We can then enter the VM shell using this command :
 ```
 vagrant ssh
 ```
@@ -129,7 +186,7 @@ When we test the installation, the connexion at the http://localhost:8080 displa
 
 ![Screenshot](image/localhost8080.png)
 
-To find the password of the root user you can use the command:
+The password is available with the following command :
 ```
 sudo cat /etc/gitlab/initial_root_password
 ```
@@ -138,8 +195,9 @@ sudo cat /etc/gitlab/initial_root_password
 ![Screenshot](image/findpassword.png)
 
 ### **Part 3. Declarative - Configure a health check for GitLab**
+<br>
 
-We check that the health is OK:
+The first health test : 
 
 ![Screenshot](image/healthcheck.png)
 
@@ -217,9 +275,9 @@ We create an image of our application:
 
  ## **5. Make container orchestration using Docker Compose**
 
-We create a [docker-compose.yaml](docker-compose.yaml) file that will start our application
+We create a [docker-compose.yaml](docker-compose.yaml) file that will start our application.
 
-After we run 
+Then we run : 
 ```
 docker-compose up
 ```
@@ -291,6 +349,6 @@ minikube dashboard
 
 ## **Author**
 
-*Tim Cronier tim.cronier@edu.ece.fr*
+*Tim Cronier tim.cronier@edu.ece.fr*  <br>
 *Julien Ducastel julien.ducastel@edu.ece.fr*
 
